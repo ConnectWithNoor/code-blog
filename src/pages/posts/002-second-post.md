@@ -1,8 +1,7 @@
 ---
 title: "Second Post - HTML"
-date: 2020-04-13 18:32:00
+date: 2020-04-13 11:32:00
 author: "John Doe"
-path: "/second-post"
 image: ../../images/javascript.jpg
 tags:
   - code

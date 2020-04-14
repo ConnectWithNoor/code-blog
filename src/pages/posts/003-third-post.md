@@ -1,8 +1,7 @@
 ---
 title: "Third Post - CSS"
-date: 2020-04-13 18:32:00
+date: 2020-04-13 12:32:00
 author: "John Doe"
-path: "/thrid-post"
 image: ../../images/javascript.jpg
 tags:
   - tutorial

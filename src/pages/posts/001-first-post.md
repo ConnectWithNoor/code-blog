@@ -1,8 +1,7 @@
 ---
 title: "First Post - Introduction"
-date: 2020-04-13 15:32:00
+date: 2020-04-13 10:32:00
 author: "Noor Muhammad"
-path: "/first-post"
 image: ../../images/javascript.jpg
 tags:
   - code

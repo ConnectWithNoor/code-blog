@@ -12,7 +12,7 @@ function Sidebar() {
           <CardTitle className="text-center text-uppercase mb-3">
             Newsletter
           </CardTitle>
-          <Form classname="text-center">
+          <Form className="text-center">
             <FormGroup>
               <Input
                 type="email"
@@ -47,7 +47,7 @@ function Sidebar() {
             render={data =>
               data.allMarkdownRemark.edges.map(({ node }) => (
                 <Card key={node.id}>
-                  <Link to={node.frontmatter.path}>
+                  <Link to={node.fields.slug}>
                     <Img
                       className="card-image-top"
                       fluid={node.frontmatter.image.childImageSharp.fluid}
@@ -55,9 +55,8 @@ function Sidebar() {
                   </Link>
                   <CardBody>
                     <CardTitle>
-                      <Link to={node.frontmatter.title}>
-                        {" "}
-                        {node.frontmatter.title}{" "}
+                      <Link to={node.fields.slug}>
+                        {node.frontmatter.title}
                       </Link>
                     </CardTitle>
                   </CardBody>
@@ -82,7 +81,6 @@ const SIDEBAR_QUERY = graphql`
           id
           frontmatter {
             title
-            path
             image {
               childImageSharp {
                 fluid(maxWidth: 300) {
@@ -90,6 +88,9 @@ const SIDEBAR_QUERY = graphql`
                 }
               }
             }
+          }
+          fields {
+            slug
           }
         }
       }
