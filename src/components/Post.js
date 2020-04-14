@@ -1,10 +1,14 @@
 import React, { memo } from "react"
 import { Link } from "gatsby"
 import { Card, CardTitle, CardText, CardSubtitle, CardBody } from "reactstrap"
+import Img from "gatsby-image"
 
-function Post({ title, author, path, date, body }) {
+function Post({ title, author, path, date, body, fluid }) {
   return (
     <Card>
+      <Link to={path}>
+        <Img className="card-image-down" fluid={fluid} />
+      </Link>
       <CardBody>
         <CardTitle>
           <Link to={path}>{title}</Link>
