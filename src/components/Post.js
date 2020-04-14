@@ -28,8 +28,8 @@ function Post({ title, author, path, date, body, fluid, tags }) {
         </CardSubtitle>
         <CardText>{body}</CardText>
         <ul className="post-tags">
-          {tags.map(tag => (
-            <li>
+          {tags.map((tag, index) => (
+            <li key={index}>
               <Link to={`/tag/${slugify(tag)}`}>
                 <Badge color="primary" className="text-uppercase">
                   {tag}

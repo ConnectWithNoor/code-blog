@@ -1,4 +1,4 @@
-import React, { memo } from "react"
+import React from "react"
 import { Card, CardTitle, CardBody, Form, FormGroup, Input } from "reactstrap"
 
 import { graphql, StaticQuery, Link } from "gatsby"
