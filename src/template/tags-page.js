@@ -9,7 +9,7 @@ function TagsPage({ pageContext }) {
   console.log(tagPostCount)
 
   return (
-    <Layout title="all tags" keywords={["tags", "topics"]}>
+    <Layout keywords={["tags", "topics"]} pageTitle="All Tags">
       <SEO title="All Tags" />
       <ul>
         {tags.map(tag => (
