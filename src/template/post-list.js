@@ -3,10 +3,11 @@ import Layout from "../components/layout"
 import Post from "../components/Post"
 import { graphql } from "gatsby"
 import SEO from "../components/seo"
+import PaginationLinks from "../components/PaginationLinks"
 
 function PostList(props) {
   const posts = props.data.allMarkdownRemark.edges
-  const { currentPage } = props.pageContext
+  const { currentPage, numberOfPages } = props.pageContext
   return (
     <Layout pageTitle={`Page: ${currentPage}`}>
       <SEO title={`Page: ${currentPage}`} />
@@ -24,6 +25,10 @@ function PostList(props) {
           />
         )
       })}
+      <PaginationLinks
+        currentPage={currentPage}
+        numberofPages={numberOfPages}
+      />
     </Layout>
   )
 }
