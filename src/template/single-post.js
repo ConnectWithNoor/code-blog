@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, CardSubtitle, CardBody, Badge } from "reactstrap"
-
 import Img from "gatsby-image"
+import { DiscussionEmbed } from "disqus-react"
 
 import Layout from "../components/layout"
 import { graphql, Link } from "gatsby"
@@ -9,9 +9,16 @@ import SEO from "../components/seo"
 import { slugify } from "../utilityFunction"
 import authors from "./authors"
 
-function SinglePost({ data }) {
+function SinglePost({ data, pageContext }) {
   const post = data.markdownRemark.frontmatter
   const author = authors.find(x => x.name === post.author)
+  const baseUrl = "https://github.com/ConnectWithNoor/"
+  const disqusShortName = "code-blog-7"
+  const disqusConfig = {
+    identifier: data.markdownRemark.id,
+    title: post.title,
+    url: baseUrl + pageContext.slug,
+  }
   return (
     <Layout
       pageTitle={post.title}
@@ -43,6 +50,32 @@ function SinglePost({ data }) {
           </ul>
         </CardBody>
       </Card>
+      <div className="text-center">Share this post</div>
+      <div className="text-center social-share-links">
+        <ul>
+          <li>
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?o=${baseUrl}${pageContext.slug}`}
+              className="facebook"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-facebook-f fa-2x"></i>
+            </a>
+          </li>
+          <li>
+            <a
+              href={`https://www.twitter.com/share?url=${baseUrl}${pageContext.slug}&text=${post.title}&via="handle`}
+              className="twitter"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-twitter fa-2x"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <DiscussionEmbed shortname={disqusShortName} config={disqusConfig} />
     </Layout>
   )
 }
