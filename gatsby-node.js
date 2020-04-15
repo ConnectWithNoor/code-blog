@@ -9,6 +9,7 @@
 const path = require("path")
 const { slugify } = require("./src/utilityFunction")
 const authors = require("./src/template/authors")
+const _ = require("lodash")
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
@@ -25,8 +26,10 @@ exports.onCreateNode = ({ node, actions }) => {
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
-  const SinglePostTemplate = path.resolve("src/template/single-post.js")
-
+  const template = {
+    singlePost: path.resolve("src/template/single-post.js"),
+    tagsPage: path.resolve("src/template/tags-page.js"),
+  }
   return graphql(`
     {
       allMarkdownRemark {
@@ -34,6 +37,7 @@ exports.createPages = ({ actions, graphql }) => {
           node {
             frontmatter {
               author
+              tags
             }
             fields {
               slug
@@ -51,7 +55,7 @@ exports.createPages = ({ actions, graphql }) => {
     posts.forEach(({ node }) =>
       createPage({
         path: node.fields.slug,
-        component: SinglePostTemplate,
+        component: template.singlePost,
         context: {
           // parsing slug for template to use to get post
           slug: node.fields.slug,
@@ -61,5 +65,32 @@ exports.createPages = ({ actions, graphql }) => {
         },
       })
     )
+
+    // get all tags
+    // ['design', 'code', ...]
+    let tags = []
+    _.each(posts, edge => {
+      if (_.get(edge, "node.frontmatter.tags")) {
+        tags = tags.concat(edge.node.frontmatter.tags)
+      }
+    })
+    // remove duplicate of tags
+    tags = _.uniq(tags)
+    // get tags count
+    // {design: 5, code: 2, ...}
+    let tagPostCount = {}
+
+    tags.forEach(tag => {
+      tagPostCount[tag] = (tagPostCount[tag] || 0) + 1
+    })
+
+    createPage({
+      path: "/tags",
+      component: template.tagsPage,
+      context: {
+        tags,
+        tagPostCount,
+      },
+    })
   })
 }
