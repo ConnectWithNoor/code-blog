@@ -6,8 +6,9 @@
 
 // You can delete this file if you're not using it
 
-const { slugify } = require("./src/utilityFunction")
 const path = require("path")
+const { slugify } = require("./src/utilityFunction")
+const authors = require("./src/template/authors")
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
@@ -54,6 +55,9 @@ exports.createPages = ({ actions, graphql }) => {
         context: {
           // parsing slug for template to use to get post
           slug: node.fields.slug,
+          // fine author imageUrl from authors
+          imageUrl: authors.find(x => x.name === node.frontmatter.author)
+            .imageUrl,
         },
       })
     )

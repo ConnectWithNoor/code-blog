@@ -7,11 +7,17 @@ import Layout from "../components/layout"
 import { graphql, Link } from "gatsby"
 import SEO from "../components/seo"
 import { slugify } from "../utilityFunction"
+import authors from "./authors"
 
 function SinglePost({ data }) {
   const post = data.markdownRemark.frontmatter
+  const author = authors.find(x => x.name === post.author)
   return (
-    <Layout pageTitle={post.title}>
+    <Layout
+      pageTitle={post.title}
+      postAuthor={author}
+      authorImageFluid={data.file.childImageSharp.fluid}
+    >
       <SEO title={post.title} />
       <Card>
         <Img
@@ -42,7 +48,7 @@ function SinglePost({ data }) {
 }
 
 export const postQuery = graphql`
-  query singlePostBySlug($slug: String!) {
+  query singlePostBySlug($slug: String!, $imageUrl: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       html
@@ -57,6 +63,13 @@ export const postQuery = graphql`
               ...GatsbyImageSharpFluid
             }
           }
+        }
+      }
+    }
+    file(relativePath: { eq: $imageUrl }) {
+      childImageSharp {
+        fluid(maxWidth: 300) {
+          ...GatsbyImageSharpFluid
         }
       }
     }
